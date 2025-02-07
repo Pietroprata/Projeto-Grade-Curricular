@@ -1,0 +1,365 @@
+{
+    "disciplinas": [
+      {
+        "id": 1,
+        "nome": "FUNDAMENTOS DE CÁLCULO E GEOMETRIA",
+        "periodo": 1,
+        "cargaHoraria": 60,
+        "coRequisitos": [],
+        "preRequisitos": [],
+        "bloqueia": [2, 3]
+      },
+      {
+        "id": 2,
+        "nome": "ÁLGEBRA LINEAR",
+        "periodo": 1,
+        "cargaHoraria": 60,
+        "coRequisitos": [],
+        "preRequisitos": [],
+        "bloqueia": [4, 5]
+      },
+      {
+        "id": 3,
+        "nome": "MATEMÁTICA DISCRETA",
+        "periodo": 1,
+        "cargaHoraria": 60,
+        "coRequisitos": [],
+        "preRequisitos": [],
+        "bloqueia": [6, 7]
+      },
+      {
+        "id": 4,
+        "nome": "FUNDAMENTOS DE ARQUITETURAS DE COMPUTADORES",
+        "periodo": 1,
+        "cargaHoraria": 64,
+        "coRequisitos": [],
+        "preRequisitos": [],
+        "bloqueia": [8]
+      },
+      {
+        "id": 5,
+        "nome": "PROGRAMAÇÃO DE COMPUTADORES I",
+        "periodo": 1,
+        "cargaHoraria": 32,
+        "coRequisitos": [6],
+        "preRequisitos": [],
+        "bloqueia": [9, 10]
+      },
+      {
+        "id": 6,
+        "nome": "LABORATÓRIO DE RESOLUÇÃO DE PROBLEMAS",
+        "periodo": 1,
+        "cargaHoraria": 30,
+        "coRequisitos": [5],
+        "preRequisitos": [],
+        "bloqueia": []
+      },
+      {
+        "id": 7,
+        "nome": "CÁLCULO 1",
+        "periodo": 2,
+        "cargaHoraria": 60,
+        "coRequisitos": [],
+        "preRequisitos": [],
+        "bloqueia": [11, 12]
+      },
+      {
+        "id": 8,
+        "nome": "CIRCUITOS DIGITAIS PARA CIÊNCIA DA COMPUTAÇÃO",
+        "periodo": 2,
+        "cargaHoraria": 34,
+        "coRequisitos": [],
+        "preRequisitos": [4],
+        "bloqueia": [13]
+      },
+      {
+        "id": 9,
+        "nome": "PROGRAMAÇÃO ESTRUTURADA",
+        "periodo": 2,
+        "cargaHoraria": 32,
+        "coRequisitos": [],
+        "preRequisitos": [5],
+        "bloqueia": [14, 15, 16]
+      },
+      {
+        "id": 10,
+        "nome": "LABORATÓRIO DE PROGRAMAÇÃO DE JOGOS",
+        "periodo": 2,
+        "cargaHoraria": 32,
+        "coRequisitos": [],
+        "preRequisitos": [5],
+        "bloqueia": []
+      },
+      {
+        "id": 11,
+        "nome": "CÁLCULO 2",
+        "periodo": 3,
+        "cargaHoraria": 60,
+        "coRequisitos": [],
+        "preRequisitos": [7],
+        "bloqueia": [17, 18]
+      },
+      {
+        "id": 12,
+        "nome": "FÍSICA I",
+        "periodo": 3,
+        "cargaHoraria": 68,
+        "coRequisitos": [],
+        "preRequisitos": [7],
+        "bloqueia": []
+      },
+      {
+        "id": 13,
+        "nome": "ARQUITETURAS DE COMPUTADORES",
+        "periodo": 3,
+        "cargaHoraria": 64,
+        "coRequisitos": [],
+        "preRequisitos": [8],
+        "bloqueia": [19]
+      },
+      {
+        "id": 14,
+        "nome": "PROGRAMAÇÃO ORIENTADA A OBJETOS",
+        "periodo": 3,
+        "cargaHoraria": 68,
+        "coRequisitos": [],
+        "preRequisitos": [9],
+        "bloqueia": [20, 21]
+      },
+      {
+        "id": 15,
+        "nome": "ESTRUTURAS DE DADOS",
+        "periodo": 3,
+        "cargaHoraria": 64,
+        "coRequisitos": [],
+        "preRequisitos": [9],
+        "bloqueia": [22, 23, 24, 25, 26]
+      },
+      {
+        "id": 16,
+        "nome": "LÓGICA PARA A CIÊNCIA DA COMPUTAÇÃO",
+        "periodo": 3,
+        "cargaHoraria": 60,
+        "coRequisitos": [],
+        "preRequisitos": [3],
+        "bloqueia": [27, 28]
+      },
+      {
+        "id": 17,
+        "nome": "ESTATÍSTICA BÁSICA",
+        "periodo": 4,
+        "cargaHoraria": 60,
+        "coRequisitos": [],
+        "preRequisitos": [11],
+        "bloqueia": [29]
+      },
+      {
+        "id": 18,
+        "nome": "AVALIAÇÃO DE DESEMPENHO",
+        "periodo": 5,
+        "cargaHoraria": 64,
+        "coRequisitos": [],
+        "preRequisitos": [17],
+        "bloqueia": []
+      },
+      {
+        "id": 19,
+        "nome": "SISTEMAS OPERACIONAIS",
+        "periodo": 4,
+        "cargaHoraria": 64,
+        "coRequisitos": [],
+        "preRequisitos": [13],
+        "bloqueia": [30, 31, 32, 33]
+      },
+      {
+        "id": 20,
+        "nome": "ENGENHARIA DE SOFTWARE I",
+        "periodo": 4,
+        "cargaHoraria": 64,
+        "coRequisitos": [],
+        "preRequisitos": [14],
+        "bloqueia": [34]
+      },
+      {
+        "id": 21,
+        "nome": "DESENVOLVIMENTO WEB",
+        "periodo": 5,
+        "cargaHoraria": 68,
+        "coRequisitos": [],
+        "preRequisitos": [14, 23],
+        "bloqueia": []
+      },
+      {
+        "id": 22,
+        "nome": "ANÁLISE E PROJETO DE ALGORITMOS",
+        "periodo": 5,
+        "cargaHoraria": 68,
+        "coRequisitos": [],
+        "preRequisitos": [3, 15],
+        "bloqueia": [35]
+      },
+      {
+        "id": 23,
+        "nome": "BANCO DE DADOS I",
+        "periodo": 4,
+        "cargaHoraria": 64,
+        "coRequisitos": [],
+        "preRequisitos": [15],
+        "bloqueia": [21, 36, 37]
+      },
+      {
+        "id": 24,
+        "nome": "BANCO DE DADOS II",
+        "periodo": 5,
+        "cargaHoraria": 64,
+        "coRequisitos": [],
+        "preRequisitos": [23],
+        "bloqueia": []
+      },
+      {
+        "id": 25,
+        "nome": "COMPILADORES",
+        "periodo": 7,
+        "cargaHoraria": 64,
+        "coRequisitos": [],
+        "preRequisitos": [15, 16, 27],
+        "bloqueia": []
+      },
+      {
+        "id": 26,
+        "nome": "INTELIGÊNCIA ARTIFICIAL",
+        "periodo": 7,
+        "cargaHoraria": 64,
+        "coRequisitos": [],
+        "preRequisitos": [16, 15],
+        "bloqueia": []
+      },
+      {
+        "id": 27,
+        "nome": "LINGUAGENS FORMAIS E TEORIA DA COMPUTAÇÃO",
+        "periodo": 6,
+        "cargaHoraria": 64,
+        "coRequisitos": [],
+        "preRequisitos": [16],
+        "bloqueia": [25]
+      },
+      {
+        "id": 28,
+        "nome": "PROGRAMAÇÃO CIENTÍFICA",
+        "periodo": 6,
+        "cargaHoraria": 64,
+        "coRequisitos": [],
+        "preRequisitos": [],
+        "bloqueia": []
+      },
+      {
+        "id": 29,
+        "nome": "REDES DE COMPUTADORES I",
+        "periodo": 5,
+        "cargaHoraria": 64,
+        "coRequisitos": [],
+        "preRequisitos": [19],
+        "bloqueia": [38]
+      },
+      {
+        "id": 30,
+        "nome": "REDES DE COMPUTADORES II",
+        "periodo": 6,
+        "cargaHoraria": 64,
+        "coRequisitos": [],
+        "preRequisitos": [29],
+        "bloqueia": []
+      },
+      {
+        "id": 31,
+        "nome": "COMPUTAÇÃO GRÁFICA",
+        "periodo": 6,
+        "cargaHoraria": 64,
+        "coRequisitos": [],
+        "preRequisitos": [2, 15],
+        "bloqueia": []
+      },
+      {
+        "id": 32,
+        "nome": "ENGENHARIA DE SOFTWARE II",
+        "periodo": 6,
+        "cargaHoraria": 64,
+        "coRequisitos": [],
+        "preRequisitos": [20],
+        "bloqueia": []
+      },
+      {
+        "id": 33,
+        "nome": "ALGORITMOS EM GRAFOS",
+        "periodo": 6,
+        "cargaHoraria": 64,
+        "coRequisitos": [],
+        "preRequisitos": [22],
+        "bloqueia": []
+      },
+         {
+      "id": 34,
+      "nome": "PROJETO FINAL I-A",
+      "periodo": 7,
+      "cargaHoraria": 90,
+      "coRequisitos": [],
+      "preRequisitos": [1, 2, 3, 5, 23, 20, 16, 19, 37, 38, 39, 40],
+      "bloqueia": [39]
+    },
+    {
+        "id": 35,
+        "nome": "INTERFACE HOMEM-MÁQUINA",
+        "periodo": 7,
+        "cargaHoraria": 64,
+        "coRequisitos": [],
+        "preRequisitos": [20],
+        "bloqueia": []
+      },
+      {
+        "id": 36,
+        "nome": "SISTEMAS DISTRIBUÍDOS",
+        "periodo": 7,
+        "cargaHoraria": 64,
+        "coRequisitos": [],
+        "preRequisitos": [19],
+        "bloqueia": []
+      },
+      {
+        "id": 37,
+        "nome": "PESQUISA OPERACIONAL",
+        "periodo": 7,
+        "cargaHoraria": 64,
+        "coRequisitos": [],
+        "preRequisitos": [2, 9],
+        "bloqueia": []
+      },
+      {
+        "id": 38,
+        "nome": "LABORATÓRIO DE PROGRAMAÇÃO PARALELA I",
+        "periodo": 7,
+        "cargaHoraria": 60,
+        "coRequisitos": [],
+        "preRequisitos": [15, 19], 
+        "bloqueia": []
+      },
+  
+      {
+        "id": 39,
+        "nome": "COMPUTAÇÃO E SOCIEDADE",
+        "periodo": 2,
+        "cargaHoraria": 32,
+        "coRequisitos": [],
+        "preRequisitos": [],
+        "bloqueia": []
+      },
+      {
+        "id": 36,
+        "nome": "PROJETO FINAL II-A",
+        "periodo": 8,
+        "cargaHoraria": 90,
+        "coRequisitos": [],
+        "preRequisitos": [34],
+        "bloqueia": []
+      }
+  ]
+}
