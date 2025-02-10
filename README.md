@@ -7,7 +7,7 @@
 Este é um projeto pessoal com propósto de gerar uma melhor visualização/panorama da grade do curso para os alunos (e para mim).
 
 
-👉 **[Acesse o projeto online aqui! https://pietroprata.github.io/Projeto-Grade-Curricular/](#)** 
+👉 **[Acesse o projeto online aqui!](https://pietroprata.github.io/Projeto-Grade-Curricular/#)** 
 
 ---
 
