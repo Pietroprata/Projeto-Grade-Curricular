@@ -4,19 +4,31 @@
   --cor-disciplina: #4a90e2;
   --cor-concluida: #27ae60;
   --cor-bloqueio: #e74c3c;
-  --cor-texto: #ffffff;
+  --cor-texto: #333333;
+  --cor-fundo: #f8f9fa;
+  --cor-texto: #333333;
+  --cor-card: #ffffff;
   --espacamento: 7px; /* Aumentado */
-  --sombra-suave: 0 2px 4px rgba(0,0,0,0.05);
+  --sombra-suave: 0 2px 4px rgba(0, 0, 0, 0.1);
   --transicao-padrao: all 0.3s ease;
+}
+
+[data-tema="escuro"] {
+  --cor-fundo: #1a1a1a;
+  --cor-texto: #e0e0e0;
+  --cor-card: #2d2d2d;
+  --cor-periodo: #3a3a3a;
 }
 
 /* ===== ESTILOS GERAIS ===== */
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   margin: 0;
   padding: 12px; /* Aumentado */
   background: linear-gradient(to bottom, #f0f4f8, #ffffff);
-  color: #333;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 /* ===== CABEÇALHO ===== */
@@ -24,17 +36,26 @@ header {
   background-color: #3498db;
   color: white;
   text-align: center;
-  padding: 10px 0; /* Aumentado */
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+  padding: 10px 0;
+  margin-bottom: 20px;
 }
 
-h1 {
-  text-align: center;
-  color: var(--cor-periodo);
-  margin: 10px 0; /* Aumentado */
-  font-size: 1.0rem; /* Aumentado */
+header h1 {
+  margin: 0;
+  font-size: 1.7rem;
+}
+
+header p {
+  margin: 10px 0 0;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* ===== SEÇÃO PRINCIPAL ===== */
+main {
+  padding: 10px;
+  max-width: 2200px;
+  margin: 0 auto;
 }
 
 /* ===== GRADE PRINCIPAL ===== */
@@ -57,10 +78,11 @@ h1 {
 /* ===== PERÍODO ===== */
 .periodo {
   background: white;
+  background-color: var(--cor-card);
   border-radius: 8px;
   box-shadow: var(--sombra-suave);
-  padding: 10px; /* Aumentado */
-  margin-bottom: 0.8rem; /* Aumentado */
+  padding: 15px; /* Aumentado */
+  margin-bottom: 20px; /* Aumentado */
   display: flex;
   flex-direction: column;
   transition: var(--transicao-padrao);
@@ -72,15 +94,17 @@ h1 {
   background-color: #cce7ff;
 }
 
+/* style.css - Modificar o título dos períodos */
 .periodo-titulo {
-  background-color: var(--cor-periodo);
-  color: var(--cor-texto);
-  padding: 8px; /* Aumentado */
+  background-color: var(--cor-periodo); /* Cor de fundo do título */
+  color: white; /* Texto branco para melhor contraste */
+  padding: 8px;
   border-radius: 4px;
-  margin-bottom: 12px; /* Aumentado */
-  font-size: 1rem; /* Aumentado */
+  margin-bottom: 12px;
+  font-size: 1rem;
   font-weight: 600;
   text-align: center;
+  letter-spacing: 1px; /* Espaçamento entre letras para melhorar a legibilidade */
 }
 
 /* ===== DISCIPLINAS ===== */
@@ -93,9 +117,11 @@ h1 {
 .disciplina {
   background-color: var(--cor-disciplina);
   color: var(--cor-texto);
-  padding: 10px; /* Aumentado */
+  padding: 10px;
+  margin: 5px;
   border-radius: 8px;
   font-size: 0.8rem; /* Aumentado */
+  font-weight: 500;
   line-height: 1.3; /* Aumentado */
   min-height: 60px; /* Aumentado */
   display: flex;
@@ -106,9 +132,11 @@ h1 {
   transition: var(--transicao-padrao);
   word-break: break-word;
   border: 1px solid #004d40;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--sombra-suave);
   flex: 1 1 140px; /* Aumentado */
   max-width: 140px; /* Aumentado */
+  background-color: var(--cor-card);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .disciplina:hover {
@@ -119,12 +147,18 @@ h1 {
 .disciplina.concluida {
   background-color: var(--cor-concluida);
   animation: pulse 0.4s;
+  color: white;
 }
 
 .disciplina.bloqueada {
   background-color: var(--cor-bloqueio);
   cursor: not-allowed;
   opacity: 0.7;
+  color: white;
+}
+.disciplina.disponivel {
+  background-color: var(--cor-disciplina);
+  color: white;
 }
 
 /* ===== CONEXÕES ===== */
@@ -152,25 +186,33 @@ h1 {
 
 /* ===== ANIMAÇÕES ===== */
 @keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* ===== RESPONSIVIDADE ===== */
 @media (max-width: 768px) {
   .container-grade {
-      grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
   }
-  
+
   .periodo {
-      padding: 10px; /* Aumentado */
+    padding: 10px; /* Aumentado */
   }
-  
+
   .disciplina {
-      font-size: 0.75rem; /* Aumentado */
-      padding: 8px; /* Aumentado */
-      max-width: 100%;
+    font-size: 0.75rem; /* Aumentado */
+    padding: 8px; /* Aumentado */
+    max-width: 100%;
+    transition: background-color 0.3s ease,
+      transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
   }
 }
 
@@ -232,7 +274,7 @@ h1 {
 }
 
 .tooltip-dependencias::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 100%;
   left: 50%;
@@ -240,6 +282,13 @@ h1 {
   border-width: 5px;
   border-style: solid;
   border-color: #333 transparent transparent transparent;
+}
+
+/* style.css - Adicionar */
+.bloqueio-info {
+  color: #ff6b6b;
+  margin-top: 8px;
+  font-size: 0.9em;
 }
 /* Estilo do contêiner da barra de progresso */
 .container-progresso {
@@ -261,11 +310,87 @@ h1 {
   color: white;
   line-height: 30px;
   font-size: 14px;
-  transition: width 0.5s ease;
+  transition: width 0.5s ease-in-out;
+}
+
+/* style.css - Adicionar */
+/* style.css - Adicionar */
+.container-resetar {
+  text-align: center;
+  margin: 20px 0;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+[data-tema="escuro"] .container-resetar {
+  background-color: rgba(45, 45, 45, 0.9);
+}
+
+.botao-vermelho {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+}
+
+.botao-vermelho:hover {
+  background-color: #c0392b;
+}
+/* MODO ESCURO */
+[data-tema="escuro"] {
+  --cor-periodo: #404040;
+  --cor-disciplina: #2d4059;
+  --cor-concluida: #1b5e20;
+  --cor-bloqueio: #bf360c;
+  --cor-texto: #eeeeee;
+  background: #121212;
+}
+
+[data-tema="escuro"] .disciplina {
+  border-color: #555;
+}
+
+[data-tema="escuro"] .periodo {
+  background-color: #262626;
+  border-color: #333;
+}
+/* ===== RODAPÉ ===== */
+footer {
+  background-color: #2c3e50;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  margin-top: 40px;
+  font-size: 0.9rem;
+}
+
+footer p {
+  margin: 0;
+}
+
+.social-links {
+  margin-top: 10px;
+}
+
+.social-links a {
+  color: white;
+  margin: 0 10px;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+  color: #f1c40f;
 }
 
 @media (min-width: 1200px) {
   body {
-      padding: 20px 5%; /* Aumentado */
+    padding: 20px 5%; /* Aumentado */
   }
 }
