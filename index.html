@@ -1,23 +1,62 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Grade Curricular - Ciência da Computação</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<header>
-    <h1>Visualização da Grade Curricular</h1>
-</header>
-<body>
-    <h1>Grade Curricular - Ciência da Computação</h1>
-    <!-- Barra de Progresso -->
-    <div class="container-progresso">
-        <div class="barra-progresso"></div>
+    <link rel="stylesheet" href="style.css" />
+    <!-- Ícones do FontAwesome para GitHub e LinkedIn -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <button id="toggleModo" aria-label="Alternar modo escuro">🌓</button>
+      <h1>Visualização da Grade Curricular - Ciência da Computação</h1>
+      <p>
+        Explore sua grade curricular de forma interativa e visualize suas
+        disciplinas, pré-requisitos e progresso. [fase de testes]
+      </p>
+      <p>Curriculo Base: 31.02.003 (2023)</p>
+    </header>
+    <!-- Botão de resetar progresso -->
+    <div class="container-resetar">
+      <button onclick="resetarProgresso()" class="botao-vermelho">
+        Resetar Progresso
+      </button>
     </div>
-    <!-- Grade de Disciplinas -->
-    <div class="container-grade" id="gradeContainer"></div>
-    <svg id="conexoes"></svg>
+    <main>
+      <section aria-labelledby="grade-title">
+        <!-- Barra de Progresso -->
+        <div class="container-progresso">
+          <div class="barra-progresso"></div>
+        </div>
+        <!-- Grade de Disciplinas -->
+        <div class="container-grade" id="gradeContainer"></div>
+        <svg id="conexoes"></svg>
+      </section>
+    </main>
+    <footer>
+      <p>Desenvolvido por Pietro Prata - 2025</p>
+      <div class="social-links">
+        <a
+          href="https://github.com/pietroprata"
+          target="_blank"
+          aria-label="GitHub"
+        >
+          <i class="fab fa-github"></i>
+        </a>
+        <a
+          href="https://linkedin.com/in/pietrocastroprata"
+          target="_blank"
+          aria-label="LinkedIn"
+        >
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </div>
+    </footer>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
