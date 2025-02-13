@@ -61,19 +61,21 @@ main {
 /* ===== GRADE PRINCIPAL ===== */
 #gradeContainer {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* Aumentado */
-  gap: 10px; /* Aumentado */
-  padding: 10px; /* Aumentado */
+  grid-template-columns: repeat(auto-fit, minmax(157px, 1fr));
+  max-width: 1400px; /* Aumentado */
+  gap: 30px; /* Aumentado */
+  padding: 1rem; /* Aumentado */
 }
 
-.container-grade {
+/* .container-grade {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Aumentado */
-  gap: 10px; /* Aumentado */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+  gap: 20px; 
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0.7rem; /* Aumentado */
-}
+  padding: 0.7rem; 
+  justify-items: center;
+} */
 
 /* ===== PERÍODO ===== */
 .periodo {
@@ -85,9 +87,13 @@ main {
   margin-bottom: 20px; /* Aumentado */
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  margin: 0 auto;
   transition: var(--transicao-padrao);
   border: 1px solid #ddd;
   min-width: 140px; /* Aumentado */
+  max-width: 95%;
+  width: 100%;
 }
 
 .periodo:hover {
@@ -98,19 +104,23 @@ main {
 .periodo-titulo {
   background-color: var(--cor-periodo); /* Cor de fundo do título */
   color: white; /* Texto branco para melhor contraste */
-  padding: 8px;
-  border-radius: 4px;
+  padding: 10px 15px;
+  border-radius: 6px;
   margin-bottom: 12px;
   font-size: 1rem;
   font-weight: 600;
   text-align: center;
-  letter-spacing: 1px; /* Espaçamento entre letras para melhorar a legibilidade */
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  user-select: none; /* Espaçamento entre letras para melhorar a legibilidade */
 }
 
 /* ===== DISCIPLINAS ===== */
 .disciplinas-container {
   display: grid;
-  gap: 0.5rem; /* Aumentado */
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
   margin-top: 1rem; /* Aumentado */
 }
 
@@ -184,6 +194,40 @@ main {
   stroke: #2980b9;
 }
 
+/* style.css - Adicionar estilos para os títulos de período como botões */
+.periodo-titulo {
+  cursor: pointer; /* Mostra que é clicável */
+  padding: 10px 15px;
+  background-color: var(--cor-periodo);
+  color: white;
+  border-radius: 6px;
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  user-select: none; /* Evita seleção de texto ao clicar */
+}
+
+.periodo-titulo:hover {
+  background-color: #34495e; /* Cor mais escura ao passar o mouse */
+  transform: translateY(-2px);
+}
+
+.periodo-titulo:active {
+  transform: translateY(0);
+}
+
+/* Feedback visual ao marcar o período */
+/* style.css - Adicionar feedback visual permanente */
+.periodo-titulo.concluido {
+  background-color: var(--cor-concluida);
+  opacity: 0.9;
+}
+
+/* Adicionar ícone de check */
+.periodo-titulo.concluido::after {
+  content: " ✓";
+  font-weight: bold;
+}
+
 /* ===== ANIMAÇÕES ===== */
 @keyframes pulse {
   0% {
@@ -233,19 +277,23 @@ main {
 
 /* Tooltip */
 .tooltip {
-  position: absolute;
+  position: fixed;
   background-color: #333;
   color: #fff;
   padding: 10px; /* Aumentado */
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 5px;
   font-size: 14px; /* Aumentado */
   z-index: 1000;
-  white-space: nowrap;
+  white-space: none;
   top: -40px; /* Aumentado */
   left: 50%;
   transform: translateX(-50%);
   opacity: 0.9;
   pointer-events: none;
+  max-width: min(300px, 90vw);
+  pointer-events: auto;
+  backdrop-filter: blur(2px);
 }
 
 .tooltip-dependencias {
