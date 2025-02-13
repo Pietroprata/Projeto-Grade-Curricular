@@ -102,6 +102,7 @@ main {
 
 /* style.css - Modificar o título dos períodos */
 .periodo-titulo {
+  align-self: center;
   background-color: var(--cor-periodo); /* Cor de fundo do título */
   color: white; /* Texto branco para melhor contraste */
   padding: 10px 15px;
