@@ -59,10 +59,12 @@ class GradeRenderer {
     this.init();
   }
 
+  // No método init(), adicionar:
   init() {
     this.renderGrade();
     this.renderConexoes();
     this.setupEventListeners();
+    this.setupPeriodoButtons(); // Adicionar esta linha
     this.atualizarProgresso();
   }
   atualizarProgresso() {
@@ -181,7 +183,23 @@ class GradeRenderer {
   }
 
   mostrarTooltip(disciplina) {
+    const elemento = document.querySelector(`[data-id="${disciplina.id}"]`);
+    if (!elemento) return;
     const tooltip = document.createElement("div");
+    const rect = elemento.getBoundingClientRect();
+    const spaceAbove = rect.top;
+    const spaceBelow = window.innerHeight - rect.bottom;
+
+    if (spaceBelow > 150 || spaceBelow > spaceAbove) {
+      tooltip.style.top = `${rect.bottom + 10}px`;
+    } else {
+      tooltip.style.bottom = `${window.innerHeight - rect.top + 10}px`;
+    }
+
+    tooltip.style.left = `${rect.left + rect.width / 2}px`;
+    tooltip.style.transform = "translateX(-50%)";
+
+    document.body.appendChild(tooltip); // Adicionar ao body
     tooltip.className = "tooltip";
     tooltip.innerHTML += `
          ${
@@ -197,6 +215,36 @@ class GradeRenderer {
              : ""
          }
      `;
+  }
+
+  destacarRelacionadas(disciplina) {
+    // Destacar pré-requisitos faltantes apenas se estiver bloqueada
+    if (!disciplina.disponivel) {
+      disciplina.preRequisitos.forEach((preReqId) => {
+        const preReq = this.state.disciplinas.get(preReqId);
+        if (preReq && !preReq.concluida) {
+          const preReqElement = document.querySelector(
+            `[data-id="${preReqId}"]`
+          );
+          if (preReqElement) {
+            preReqElement.classList.add("destaque-pre-requisito");
+          }
+        }
+      });
+
+      // Mostrar tooltip APENAS se houver bloqueio
+      this.mostrarTooltip(disciplina);
+    }
+
+    // Destacar dependentes sempre (opcional)
+    [...this.state.disciplinas.values()].forEach((d) => {
+      if (d.preRequisitos.includes(disciplina.id)) {
+        const dependenteElement = document.querySelector(`[data-id="${d.id}"]`);
+        if (dependenteElement) {
+          dependenteElement.classList.add("destaque-dependente");
+        }
+      }
+    });
   }
 
   // tooltip.innerHTML = `
@@ -297,27 +345,41 @@ class GradeRenderer {
     }
   }
 
+  // script.js - Modificar o método getConexaoPath
   getConexaoPath(origem, destino) {
-    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    const svg = document.querySelector(SELECTORS.CONEXOES);
+    const container = document.querySelector(SELECTORS.GRADE_CONTAINER);
+
+    // Usar offset do container ao invés de window.scroll
+    const containerRect = container.getBoundingClientRect();
+
     const origRect = origem.getBoundingClientRect();
     const destRect = destino.getBoundingClientRect();
 
+    // Calcular posições relativas ao container
     const start = {
-      x: origRect.right + window.scrollX,
-      y: origRect.top + origRect.height / 2 + window.scrollY,
+      x: origRect.left - containerRect.left + origRect.width / 2,
+      y: origRect.top - containerRect.top + origRect.height / 2,
     };
 
     const end = {
-      x: destRect.left + window.scrollX,
-      y: destRect.top + destRect.height / 2 + window.scrollY,
+      x: destRect.left - containerRect.left + destRect.width / 2,
+      y: destRect.top - containerRect.top + destRect.height / 2,
     };
+
+    // Suavizar curva
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    const dx = end.x - start.x;
+    const dy = end.y - start.y;
 
     path.setAttribute(
       "d",
-      `M${start.x},${start.y} C${start.x + 50},${start.y} ${end.x - 50},${
-        end.y
-      } ${end.x},${end.y}`
+      `M${start.x},${start.y} 
+     C${start.x + dx * 0.25},${start.y} 
+      ${end.x - dx * 0.25},${end.y} 
+      ${end.x},${end.y}`
     );
+
     return path;
   }
 
@@ -344,10 +406,16 @@ class GradeRenderer {
 
     // Evento para alternar modo escuro
     document.getElementById("toggleModo").addEventListener("click", () => {
-      const tema = document.body.dataset.tema === "escuro" ? "claro" : "escuro";
-      document.body.dataset.tema = tema;
-      localStorage.setItem("tema", tema);
-      this.atualizarIconeModo(tema);
+      const temas = ["claro", "escuro"];
+      const currentIndex = temas.indexOf(document.body.dataset.tema || "claro");
+      const newTema = temas[(currentIndex + 1) % temas.length];
+
+      document.body.dataset.tema = newTema;
+      localStorage.setItem("tema", newTema);
+      this.atualizarIconeModo(newTema);
+
+      // Forçar redesenho das conexões
+      requestAnimationFrame(() => this.renderConexoes(true));
     });
 
     // Eventos de redimensionamento
@@ -422,6 +490,81 @@ class GradeRenderer {
     );
     disciplinaElement.appendChild(tooltip);
   }
+
+  setupPeriodoButtons() {
+    // Seleciona todos os títulos de período
+    const periodoTitulos = document.querySelectorAll(".periodo-titulo");
+
+    periodoTitulos.forEach((titulo) => {
+      // Adiciona evento de clique
+      titulo.addEventListener("click", () => {
+        const periodo = parseInt(titulo.textContent); // Extrai o número do período
+        this.concluirPeriodo(periodo);
+
+        // Feedback visual
+        titulo.classList.add("concluido");
+        setTimeout(() => titulo.classList.remove("concluido"), 1000);
+      });
+    });
+  }
+
+  concluirPeriodo(periodo) {
+    // 1. Encontra todas as disciplinas do período
+    const disciplinasDoPeriodo = [...this.state.disciplinas.values()].filter(
+      (d) => d.periodo === periodo
+    );
+
+    // 2. Verifica se todas as disciplinas do período já estão concluídas
+    const todasConcluidas = disciplinasDoPeriodo.every((d) => d.concluida);
+
+    // 3. Mensagem de confirmação dinâmica
+    const mensagem = todasConcluidas
+      ? `Deseja desmarcar todas as disciplinas do ${periodo}º período?`
+      : `Deseja marcar todas as disciplinas do ${periodo}º período como concluídas?`;
+
+    if (!confirm(mensagem)) {
+      return; // Se o usuário cancelar, não faz nada
+    }
+
+    // 4. Alterna o estado de todas as disciplinas do período
+    disciplinasDoPeriodo.forEach((d) => {
+      d.concluida = !todasConcluidas; // Inverte o estado atual
+      this.state.atualizarDependencias(d.id); // Atualiza dependências
+      this.atualizarDisciplina(d); // Atualiza visualmente a disciplina
+    });
+
+    // 5. Atualiza o estado e a interface
+    this.state.salvarProgresso(); // Salva no localStorage
+    this.atualizarProgresso(); // Atualiza a barra de progresso
+    this.renderConexoes(true); // Redesenha as conexões
+    // 6. Feedback visual no título do período
+    const titulo = Array.from(
+      document.querySelectorAll(".periodo-titulo")
+    ).find((t) => t.textContent.includes(`${periodo}º Período`));
+  }
+}
+
+class ConnectionManager {
+  constructor(gradeRenderer) {
+    this.gradeRenderer = gradeRenderer;
+    this.cache = new Map();
+    this.observer = new ResizeObserver(() => this.updateConnections());
+    this.observer.observe(document.body);
+  }
+
+  updateConnections() {
+    const newHashes = this.calculateConnectionHashes();
+    if (this.hashes !== newHashes) {
+      this.gradeRenderer.renderConexoes(true);
+      this.hashes = newHashes;
+    }
+  }
+
+  calculateConnectionHashes() {
+    return [...this.gradeRenderer.state.disciplinas.values()]
+      .map((d) => `${d.id}-${d.preRequisitos.join(",")}`)
+      .join("|");
+  }
 }
 
 // script.js - Adicionar no final
@@ -477,7 +620,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const temaSalvo = localStorage.getItem("tema") || "claro";
     document.body.dataset.tema = temaSalvo;
 
-    gradeRenderer = new GradeRenderer(state); // Atribuir à variável global
+    gradeRenderer = new GradeRenderer(state);
+    new ConnectionManager(gradeRenderer); // Atribuir à variável global
   } catch (error) {
     console.error("Erro ao carregar dados:", error);
   }
