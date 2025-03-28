@@ -61,10 +61,11 @@ main {
 /* ===== GRADE PRINCIPAL ===== */
 #gradeContainer {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(157px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   max-width: 1400px; /* Aumentado */
-  gap: 30px; /* Aumentado */
-  padding: 1rem; /* Aumentado */
+  gap: 25px; /* Aumentado */
+  padding: 10px; /* Aumentado */
+  width: 100%;
 }
 
 /* .container-grade {
@@ -120,8 +121,9 @@ main {
 /* ===== DISCIPLINAS ===== */
 .disciplinas-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  width: 100%;
   margin-top: 1rem; /* Aumentado */
 }
 
@@ -140,19 +142,20 @@ main {
   justify-content: center;
   text-align: center;
   cursor: pointer;
-  transition: var(--transicao-padrao);
+  transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+  will-change: transform;
   word-break: break-word;
   border: 1px solid #004d40;
   box-shadow: var(--sombra-suave);
-  flex: 1 1 140px; /* Aumentado */
-  max-width: 140px; /* Aumentado */
+  flex: 1 1 160px; /* Aumentado */
+  max-width: none; /* Aumentado */
   background-color: var(--cor-card);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .disciplina:hover {
-  transform: translateY(-5px);
-  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 15);
 }
 
 .disciplina.concluida {
@@ -242,6 +245,29 @@ main {
   }
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 /* ===== RESPONSIVIDADE ===== */
 @media (max-width: 768px) {
   .container-grade {
@@ -249,15 +275,24 @@ main {
   }
 
   .periodo {
-    padding: 10px; /* Aumentado */
+    padding: 10px;
+    min-width: 100%;
+    margin: 0 0 20px 0; /* Aumentado */
   }
 
   .disciplina {
+    flex: 1 1 120px;
     font-size: 0.75rem; /* Aumentado */
     padding: 8px; /* Aumentado */
+    min-height: 50px;
     max-width: 100%;
     transition: background-color 0.3s ease,
       transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+  }
+
+  #toggleModo {
+    padding: 8px 12px;
+    font-size: 1.2rem;
   }
 }
 
@@ -281,8 +316,8 @@ main {
   position: fixed;
   background-color: #333;
   color: #fff;
-  padding: 10px; /* Aumentado */
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 15px; /* Aumentado */
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 5px;
   font-size: 14px; /* Aumentado */
   z-index: 1000;
@@ -294,7 +329,8 @@ main {
   pointer-events: none;
   max-width: min(300px, 90vw);
   pointer-events: auto;
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(px);
+  animation: fadeIn 0.2s ease-out;
 }
 
 .tooltip-dependencias {
@@ -353,6 +389,9 @@ main {
 .barra-progresso {
   width: 0;
   height: 30px;
+  background: linear-gradient(90deg, #27ae60, #2ecc71);
+  background-size: 200% 100%;
+  animation: gradient 2s ease infinite;
   background-color: #27ae60;
   border-radius: 8px;
   text-align: center;
