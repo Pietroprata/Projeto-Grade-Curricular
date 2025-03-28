@@ -13,23 +13,39 @@ const CLASSES = {
 // ========== GERENCIAMENTO DE ESTADO ==========
 class GradeState {
   constructor(disciplinas) {
-    this.disciplinas = new Map(disciplinas.map((d) => [d.id, d]));
+    this.disciplinas = new Map(
+      disciplinas.map((d) => [
+        d.id,
+        {
+          ...d,
+          concluida: false,
+          disponivel: false,
+        },
+      ])
+    );
     this.carregarProgresso();
   }
 
   carregarProgresso() {
-    const progresso = JSON.parse(localStorage.getItem("progresso") || "[]");
-    progresso.forEach((id) => {
+    const dados = JSON.parse(
+      localStorage.getItem("progresso") || '{"versao":1,"ids":[]}'
+    );
+    if (dados.versao !== 1) return; // Futura compatibilidade
+
+    dados.ids.forEach((id) => {
       const disciplina = this.disciplinas.get(id);
       if (disciplina) disciplina.concluida = true;
     });
   }
 
   salvarProgresso() {
-    const progresso = [...this.disciplinas.values()]
-      .filter((d) => d.concluida)
-      .map((d) => d.id);
-    localStorage.setItem("progresso", JSON.stringify(progresso));
+    const dados = {
+      versao: 1,
+      ids: [...this.disciplinas.values()]
+        .filter((d) => d.concluida)
+        .map((d) => d.id),
+    };
+    localStorage.setItem("progresso", JSON.stringify(dados));
   }
 
   verificarDisponibilidade(disciplina) {
@@ -72,6 +88,7 @@ class GradeRenderer {
     const concluidas = [...this.state.disciplinas.values()].filter(
       (d) => d.concluida
     ).length;
+
     const progresso = (concluidas / total) * 100;
 
     const barra = document.querySelector(".barra-progresso");
@@ -304,6 +321,15 @@ class GradeRenderer {
     this.atualizarProgresso();
   }
 
+  atualizarDependenciasVisuais(id) {
+    document.querySelectorAll(".disciplina").forEach((elemento) => {
+      const disciplina = this.state.disciplinas.get(elemento.dataset.id);
+      if (disciplina.preRequisitos.includes(id)) {
+        this.atualizarDisciplina(disciplina);
+      }
+    });
+  }
+
   atualizarDisciplina(disciplina) {
     const element = document.querySelector(`[data-id="${disciplina.id}"]`);
     if (element) {
@@ -316,14 +342,7 @@ class GradeRenderer {
     const svg = document.querySelector(SELECTORS.CONEXOES);
 
     if (!updateOnly) {
-      svg.innerHTML = `
-                <defs>
-                    <marker id="arrowhead" markerWidth="8" markerHeight="6" 
-                    refX="7" refY="3" orient="auto">
-                        <polygon points="0 0, 8 3, 0 6" fill="#95a5a6"/>
-                    </marker>
-                </defs>
-            `;
+      svg.querySelectorAll(".conexao").forEach((c) => c.remove());
     }
 
     [...this.state.disciplinas.values()].forEach((d) => {
@@ -608,7 +627,7 @@ function resetarProgresso() {
 // ========== INICIALIZAÇÃO ==========
 document.addEventListener("DOMContentLoaded", async () => {
   try {
-    // Limpa o progresso armazenado
+    // Limpa o progresso armazenado cada vez que atualiza a página
     localStorage.removeItem("progresso");
 
     const response = await fetch("dados.json");
